@@ -1,10 +1,10 @@
 @font-face {
   /* 为载入的字体取名字(随意) */
-  font-family: 'LXGW';	
+  font-family: 'JiaShu';	
   /* 字体文件地址(相对或者绝对路径都可以) */
-  src: url(/font/LXGWWenKai-Regular.ttf);
+  src: url(/font/HYJiaShu.ttf);
   /* 定义加粗样式(加粗多少) */
-  font-weight: normal;
+  font-weight: bolder;
   /* 定义字体样式(斜体/非斜体) */
   font-style: normal;
   /* 定义显示样式 */
