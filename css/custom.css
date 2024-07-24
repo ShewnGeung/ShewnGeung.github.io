@@ -281,17 +281,17 @@ div#archive {
 }
 
 .card-info-avatar .author-status-box:hover {
-  width: 125px;
+  width: 115px;
 }
 
 .card-info-avatar .author-status-box:hover .author-status span {
-  width: 125px;
+  width: 115px;
   margin-left: 4px;
 }
 
 .card-info-avatar .author-status-box .author-status span {
   width: 0;
-  font-size: 16px;
+  font-size: 1rem;
   height: 100%;
   line-height: normal;
   overflow: hidden;
