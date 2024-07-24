@@ -1484,7 +1484,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: HYJiangJun, 'Microsoft Yahei', sans-serif;;
+  font-family: HYJiaShu, 'Microsoft Yahei', sans-serif;;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -1591,7 +1591,7 @@ a:hover {
 .site-name,
 #aside-content .author-info__name,
 #aside-content .author-info__description {
-  font-family: HYJiangJun, "Microsoft Yahei", sans-serif;
+  font-family: HYJiaShu, "Microsoft Yahei", sans-serif;
 }
 .is-center {
   text-align: center;
@@ -1763,7 +1763,7 @@ figure.highlight pre .javascript .function {
 #article-container pre,
 #article-container code {
   font-size: 16px;
-  font-family: JbMono, HYJiangJun, "Microsoft YaHei", sans-serif !important;
+  font-family: JbMono, HYJiaShu, "Microsoft YaHei", sans-serif !important;
 }
 #article-container code {
   padding: 2px 4px;
