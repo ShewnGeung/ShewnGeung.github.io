@@ -1,8 +1,8 @@
 @font-face {
   /* 为载入的字体取名字(随意) */
-  font-family: 'MaQiDuo';	
+  font-family: 'HYJiangJun';	
   /* 字体文件地址(相对或者绝对路径都可以) */
-  src: url(/font/HYMaQiDuo.ttf);
+  src: url(/font/HYJiangJun.ttf);
   /* 定义加粗样式(加粗多少) */
   font-weight: normal;
   /* 定义字体样式(斜体/非斜体) */
@@ -54,6 +54,7 @@
   position: absolute !important;
   width: fit-content !important;
   left: 50% !important;
+  line-height: normal !important;
   transform: translateX(-50%) !important;
 }
 /* 子菜单横向展示 */
@@ -249,4 +250,57 @@ div#archive {
   height: 86%;
   left: 0;
   top: 0;
+}
+
+.card-info-avatar .author-status-box {
+  position: absolute;
+  bottom: 0;
+  left: calc(100% - 28px);
+  width: 28px;
+  height: 28px;
+  border: 1px solid #d0d7de;
+  border-radius: 2em;
+  background-color: #f8f8f8f8;
+  transition: 0.4s;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .card-info-avatar .author-status-box {
+  background-color: #222222f2;
+  border: 1px solid #5c6060;
+}
+
+
+
+.card-info-avatar .author-status-box .author-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 5px;
+}
+
+.card-info-avatar .author-status-box:hover {
+  width: 125px;
+}
+
+.card-info-avatar .author-status-box:hover .author-status span {
+  width: 125px;
+  margin-left: 4px;
+}
+
+.card-info-avatar .author-status-box .author-status span {
+  width: 0;
+  font-size: 16px;
+  height: 100%;
+  line-height: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: 0.4s;
+}
+
+.card-widget .card-info-avatar {
+  display: inline-block;
+  position: relative;
 }
