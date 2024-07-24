@@ -291,9 +291,8 @@ div#archive {
 
 .card-info-avatar .author-status-box .author-status span {
   width: 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   height: 100%;
-  line-height: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
