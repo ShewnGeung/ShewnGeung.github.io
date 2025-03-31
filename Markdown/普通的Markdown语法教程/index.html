@@ -555,23 +555,23 @@
 <p>水平分割线的格式为<code>---</code>。水平分割线写完需要换行，不能在其后面写入内容。</p>
 <h1 id="高级语法"><a href="#高级语法" class="headerlink" title="高级语法"></a>高级语法</h1><h2 id="警告框"><a href="#警告框" class="headerlink" title="警告框"></a>警告框</h2><p>警告框的通用格式为：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; [!警告内容]</span></span><br><span class="line"><span class="quote">&gt; </span></span><br><span class="line"><span class="quote">&gt; </span></span><br><span class="line"><span class="quote">&gt; </span></span><br></pre></td></tr></table></figure>
-<p>警告框分为五种：提醒、建议、重要、警告、注意。每一种对应的警告内容为：<code>Note</code>、<code>Tip</code>、<code>Important</code>、<code>Warning</code>、<code>Caution</code>。<br>例如：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; [!Note]</span></span><br><span class="line"><span class="quote">&gt; 我是提醒警告框</span></span><br></pre></td></tr></table></figure>
+<p>警告框分为五种：提醒、建议、重要、警告、注意。每一种对应的警告内容为：<code>NOTE</code>、<code>TIP</code>、<code>IMPORTANT</code>、<code>WARNING</code>、<code>CAUTION</code>。<br>例如：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; [!NOTE]</span></span><br><span class="line"><span class="quote">&gt; 我是提醒警告框</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>[!Note]<br>我是提醒警告框</p>
+<p>[!NOTE]<br>我是提醒警告框</p>
 </blockquote>
 <blockquote>
-<p>[!Tip]<br>我是建议警告框</p>
+<p>[!TIP]<br>我是建议警告框</p>
 </blockquote>
 <blockquote>
-<p>[!Important]<br>我是重要警告框</p>
+<p>[!IMPORTANT]<br>我是重要警告框</p>
 </blockquote>
 <blockquote>
-<p>[!Warning]<br>我是<del>警告</del>警告框(?)</p>
+<p>[!WARNING]<br>我是<del>警告</del>警告框(?)</p>
 </blockquote>
 <blockquote>
-<p>[!Caution]<br>我是注意警告框</p>
+<p>[!CAUTION]<br>我是注意警告框</p>
 </blockquote>
 <h2 id="笔记属性-yaml格式支持"><a href="#笔记属性-yaml格式支持" class="headerlink" title="笔记属性(yaml格式支持)"></a>笔记属性(yaml格式支持)</h2><p>该语法一般用于markdown文件开头，格式如下：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">参数1:</span><br><span class="line">参数2:</span><br><span class="line">参数3:</span><br><span class="line"><span class="section">...</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
