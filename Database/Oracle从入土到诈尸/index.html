@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Oracle从入土到诈尸 | ShewnGeung</title><meta name="author" content="ShewnGeung"><meta name="copyright" content="ShewnGeung"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="本笔记不适合初学者。本笔记不适合初学者。本笔记不适合初学者。  Oracle基础语法增删改查 SELECT查询 1SELECT column1, column2 FROM table_name WHERE condition; INSERT插入 1INSERT INTO table_name (column1, column2) VALUES (&#x27;value1&#x27;, &amp;#x27">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle从入土到诈尸">
+<meta property="og:url" content="https://shewngeung.github.io/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/index.html">
+<meta property="og:site_name" content="ShewnGeung">
+<meta property="og:description" content="本笔记不适合初学者。本笔记不适合初学者。本笔记不适合初学者。  Oracle基础语法增删改查 SELECT查询 1SELECT column1, column2 FROM table_name WHERE condition; INSERT插入 1INSERT INTO table_name (column1, column2) VALUES (&#x27;value1&#x27;, &amp;#x27">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://shewngeung.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-03-23T00:52:44.000Z">
+<meta property="article:modified_time" content="2025-03-23T00:52:44.000Z">
+<meta property="article:author" content="ShewnGeung">
+<meta property="article:tag" content="关系型数据库">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shewngeung.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://shewngeung.github.io/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Oracle从入土到诈尸',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-23 08:52:44'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/cat.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><div id="myscoll"></div><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/pictures/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="ShewnGeung"><span class="site-name">ShewnGeung</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/pictures/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Oracle从入土到诈尸</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-23T00:52:44.000Z" title="发表于 2025-03-23 08:52:44">2025-03-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-23T00:52:44.000Z" title="更新于 2025-03-23 08:52:44">2025-03-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p><strong>本笔记不适合初学者。本笔记不适合初学者。本笔记不适合初学者。</strong></p>
+</blockquote>
+<h1 id="Oracle基础语法"><a href="#Oracle基础语法" class="headerlink" title="Oracle基础语法"></a>Oracle基础语法</h1><h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><ol>
+<li><code>SELECT</code>查询 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column1, column2 <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">condition</span>;</span><br></pre></td></tr></table></figure></li>
+<li><code>INSERT</code>插入 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (column1, column2) <span class="keyword">VALUES</span> (<span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;value2&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+<li><code>UPDATE</code>修改 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name <span class="keyword">SET</span> column1 <span class="operator">=</span> <span class="string">&#x27;value&#x27;</span> <span class="keyword">WHERE</span> <span class="keyword">condition</span>;</span><br></pre></td></tr></table></figure></li>
+<li><code>DELETE</code>删除 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">condition</span>;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="LIKE"><a href="#LIKE" class="headerlink" title="LIKE"></a><code>LIKE</code></h2><p><code>LIKE</code>用于模糊匹配。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column1 <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">condition</span> <span class="keyword">LIKE</span> <span class="string">&#x27;expression&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>例如：要查询名字中含有字符’a’的人的信息：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> ename <span class="keyword">LIKE</span> <span class="string">&#x27;%a%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="基础函数"><a href="#基础函数" class="headerlink" title="基础函数"></a>基础函数</h1><p>本章节仅介绍一些常用函数。<br>函数测试一般使用<code>dual</code>表，该表没有数据，查询什么就返回什么。</p>
+<h2 id="数值函数"><a href="#数值函数" class="headerlink" title="数值函数"></a>数值函数</h2><ol>
+<li><code>abs(x)</code>：返回x的绝对值。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 123</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">abs</span>(<span class="number">-123</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>mod(x, y)</code>：返回x除以y的余数。<br> 在<code>mod(x, y)</code>中，没有正负数的概念，结果只和x的正负性相关。取余操作是一个持续相减的过程，通过x持续减去y，我们可以还可以得到x的小数部分：<strong>当y&#x3D;1时，可以直接得到x的小数部分。</strong> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 3</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">mod</span>(<span class="number">13</span>, <span class="number">5</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 0.556</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">mod</span>(<span class="number">12.556</span>, <span class="number">1</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 4</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">mod</span>(<span class="number">4</span>, <span class="number">12</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>ceil(x)</code>和<code>floor(x)</code>：向上取整和向下取整。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 13 and 12</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">ceil</span>(<span class="number">12.556</span>),<span class="built_in">floor</span>(<span class="number">12.556</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>round(x,[d])</code>：对x进行四舍五入，默认不保留小数。可选参数d表示要保留的小数位数。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 13</span></span><br><span class="line"><span class="keyword">SELECT</span> round(<span class="number">12.556</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 12.56</span></span><br><span class="line"><span class="keyword">SELECT</span> round(<span class="number">12.556</span>, <span class="number">2</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>trunc(x,[y])</code>：截取数字x。y默认为0。如果y为正数，则截取小数点后y位；如果为负数，则先保留整数部分，然后从个位开始向前y位，并将遇到的数字都变为0。该函数不进行四舍五入，直接截取。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 12</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(<span class="number">12.556</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 12.55</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(<span class="number">12.556</span>, <span class="number">2</span>) <span class="keyword">FROM</span> dual;  </span><br><span class="line"><span class="comment">-- 10</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(<span class="number">12.556</span>, <span class="number">-1</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>sign(x)</code>判断x的正负。正数返回1，负数返回-1，0返回0。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1</span></span><br><span class="line"><span class="keyword">SELECT</span> sign(<span class="number">12</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>power(x,y)</code>：返回x的y次方。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 2的3次方，8</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">power</span>(<span class="number">2</span>, <span class="number">3</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="字符函数"><a href="#字符函数" class="headerlink" title="字符函数"></a>字符函数</h2><ol>
+<li>大小写切换<br> 大小写切换分为三个函数：<code>upper(s)</code>、<code>lower(s)</code>和<code>initcap(s)</code>。<code>upper(s)</code>用于将字符串s转为大写，<code>lower(s)</code>用于将字符串s转为小写，<code>initcap(s)</code>仅仅将字符串s首字母转为大写。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- SOMETHING</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">upper</span>(<span class="string">&#x27;SOMEthing&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- something</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">lower</span>(<span class="string">&#x27;SOMEthing&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- Something</span></span><br><span class="line"><span class="keyword">SELECT</span> initcap(<span class="string">&#x27;something&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>length(s)</code>和<code>lengthb(s)</code>：用于计算字符串的字符和字节长度。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 2</span></span><br><span class="line"><span class="keyword">SELECT</span> length(<span class="string">&#x27;你好&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 6</span></span><br><span class="line"><span class="keyword">SELECT</span> lengthb(<span class="string">&#x27;你好&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>trim(s)</code>：去除字符串两端的空格。<br> 去除函数还有<code>ltrim(s1, [s2])</code>和<code>rtrim(s1, [s2])</code>，默认去除字符串s1左侧&#x2F;右侧的空格，添加参数s2后用于去除字符串s1左侧&#x2F;右侧的s2。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- something</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">trim</span>(<span class="string">&#x27;  something   &#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="keyword">SELECT</span> ltrim(<span class="string">&#x27;   something&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="keyword">SELECT</span> rtrim(<span class="string">&#x27;somethingaaaaa&#x27;</span>, <span class="string">&#x27;a&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>lpad(s1, x, s2)</code>和<code>rpad(s1, x, s2)</code>：在字符串s1左侧&#x2F;右侧填充s2直到整个字符串的长度为x。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- hhhhhhello</span></span><br><span class="line"><span class="keyword">SELECT</span> lpad(<span class="string">&#x27;hello&#x27;</span>, <span class="number">10</span>, <span class="string">&#x27;h&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- worldddddd</span></span><br><span class="line"><span class="keyword">SELECT</span> rpad(<span class="string">&#x27;world&#x27;</span>, <span class="number">10</span>, <span class="string">&#x27;d&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>instr(s1, s2, [x, [y]])</code>：在s1中从第x位开始，查找s2第y次出现的位置。<ul>
+<li>x和y默认为1。</li>
+<li>如果x为负数，则从后往前查找。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 5</span></span><br><span class="line"><span class="keyword">SELECT</span> instr(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;o&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 8</span></span><br><span class="line"><span class="keyword">SELECT</span> instr(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 8</span></span><br><span class="line"><span class="keyword">SELECT</span> instr(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="number">-1</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>substr(s, x, [y]])</code>：在s中从第x位开始截取字符串，截取长度为y。<ul>
+<li>如果省略y，则从第x位开始截取到末尾。</li>
+<li>如果x为负数，则从倒数第x位开始截取。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- world</span></span><br><span class="line"><span class="keyword">SELECT</span> substr(<span class="string">&#x27;hello world&#x27;</span>, <span class="number">6</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- llo wor</span></span><br><span class="line"><span class="keyword">SELECT</span> substr(<span class="string">&#x27;hello world&#x27;</span>, <span class="number">3</span>, <span class="number">7</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- rld</span></span><br><span class="line"><span class="keyword">SELECT</span> substr(<span class="string">&#x27;hello world&#x27;</span>, <span class="number">-3</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>replace(s1, s2, [s3]</code>将s1中的s2替换为s3，s3不写则替换为空。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- hello oracle</span></span><br><span class="line"><span class="keyword">SELECT</span> replace(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;world&#x27;</span>, <span class="string">&#x27;oracle&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- hello</span></span><br><span class="line"><span class="keyword">SELECT</span> replace(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27; world&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>translate(s1, s2, s3)</code>：将s1中的s2逐一替换为s3。<code>translate()</code>中可以使用额外的字符用于将某些文本替换为空（不是s1中出现的字符就行）。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 这是一二三四五</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">translate</span>(<span class="string">&#x27;这是12345&#x27;</span>, <span class="string">&#x27;12345&#x27;</span>, <span class="string">&#x27;一二三四五&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- heo word</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">translate</span>(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;*l&#x27;</span>, <span class="string">&#x27;*&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">translate</span>(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;?l&#x27;</span>, <span class="string">&#x27;?&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">translate</span>(<span class="string">&#x27;hello world&#x27;</span>, <span class="string">&#x27;al&#x27;</span>, <span class="string">&#x27;a&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="转换函数"><a href="#转换函数" class="headerlink" title="转换函数"></a>转换函数</h2><ol>
+<li><code>to_number(s)</code>：将字符串s转换为数字。</li>
+<li><code>to_date(s,r)</code>：将字符串s按照格式r转换为日期。<br> r的可选参数有：yyyy-&gt;年、mm-&lt;月、dd-&gt;日、hh&#x2F;hh24-&gt;小时&#x2F;24小时制、mi-&gt;分钟、ss-&gt;秒、day-&gt;星期、d-&gt;数字星期、q-&gt;季度。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 2025-01-01 12:32:55</span></span><br><span class="line"><span class="keyword">SELECT</span> to_date(<span class="string">&#x27;20250101123255&#x27;</span>,<span class="string">&#x27;yyyy-mm-dd hh24:mi:ss&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>to_char(x/d, r)</code>：将数字x或日期d按照格式r转换为字符串。<br> 对于x，其格式r为：9-&gt;占位符、0-&gt;用于个位的占位符、L-&gt;本地货币、$-&gt;美元。<br> 对于d，其格式相较于<code>to_date()</code>，额外：ddd-&gt;当前天是当年的第几天、sssss-&gt;当前秒是当天的第几秒。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 2025</span></span><br><span class="line"><span class="keyword">SELECT</span> to_char(sysdate,<span class="string">&#x27;yyyy&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h2><p>日期函数的运算规则为：日期加减数字&#x3D;日期加减<strong>天数</strong>，日期相减&#x3D;日期相差的<strong>天数</strong>。<br>在Oracle中，可以使用<code>sysdate</code>获取当前系统日期时间。</p>
+<ol>
+<li><code>add_months(d, x)</code>：将日期d增加&#x2F;减少x个月。</li>
+<li><code>month_between(d1, d2)</code>：日期d1和d2之间相差的月数。</li>
+<li><code>trunc(d, r)</code>：截断日期到格式r最初。r同<code>to_date()</code>。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 2025-01-01</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(sysdate, <span class="string">&#x27;yyyy&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 2025-04-03 09:00:00</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(sysdate, <span class="string">&#x27;hh24&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure>
+ <code>trunc()</code>还可以用于数字。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 12</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(<span class="number">12.556</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="comment">-- 12.5</span></span><br><span class="line"><span class="keyword">SELECT</span> trunc(<span class="number">12.556</span>, <span class="number">1</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+<li><code>next_day(d, x)</code>：计算下一个星期x。<br> 如果要计算下一个星期的星期几，可以先得到本周星期日，再计算本周日的下一个星期几。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 下一个星期的星期四</span></span><br><span class="line"><span class="keyword">SELECT</span> next_day(next_day(sysdate <span class="operator">-</span> <span class="number">1</span>, <span class="number">1</span>), <span class="number">4</span>) <span class="keyword">FROM</span> dual;</span><br><span class="line"><span class="keyword">SELECT</span> next_day(next_day(sysdate <span class="operator">-</span> <span class="number">1</span>, <span class="string">&#x27;星期日&#x27;</span>), <span class="string">&#x27;星期四&#x27;</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h2><ol>
+<li><code>nvl(x1, x2)</code>：处理空值。如果x1为空则返回x2，否则正常返回x1。<strong>空值如果参与数学计算那么结果一定为空。</strong></li>
+<li><code>distinct</code>：去重。和<code>select</code>一起使用：<code>select distinct ...</code>。</li>
+<li><code>case when</code>和<code>decode</code>：条件判断。<br> 这两者都用于条件判断，且都有两种语法。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CASE</span> 字段 <span class="keyword">WHEN</span> 结果<span class="number">1</span> <span class="keyword">THEN</span> 返回值<span class="number">1</span></span><br><span class="line">          <span class="keyword">WHEN</span> 结果<span class="number">2</span> <span class="keyword">THEN</span> 返回值<span class="number">2</span></span><br><span class="line">          ...</span><br><span class="line">          [<span class="keyword">ELSE</span> 返回值n]</span><br><span class="line"><span class="keyword">END</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CASE</span> <span class="keyword">WHEN</span> 条件<span class="number">1</span> <span class="keyword">THEN</span> 返回值<span class="number">1</span></span><br><span class="line">     <span class="keyword">WHEN</span> 条件<span class="number">2</span> <span class="keyword">THEN</span> 返回值<span class="number">2</span></span><br><span class="line">	 [<span class="keyword">ELSE</span> 返回值n]</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+ <code>case when</code>的返回值必须保持一致。 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">decode(字段, 结果<span class="number">1</span>, 返回值<span class="number">1</span>, 结果<span class="number">2</span>, 返回值<span class="number">2</span>,...[返回值n])</span><br><span class="line">decode(字段, 结果, 返回值<span class="number">1</span>, 返回值<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="高级函数"><a href="#高级函数" class="headerlink" title="高级函数"></a>高级函数</h1><h2 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h2><p>聚合函数是用于对一组值执行计算并返回单个值的函数。这些函数通常在数据分析和报告中使用，以提供对数据集的总结视图。（<strong>将多条数据高度聚合成一条数据</strong>）<br>聚合函数只能显示聚合函数的结果以及字段。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">sum</span>(sal) <span class="keyword">FROM</span> emp;</span><br></pre></td></tr></table></figure>
+<p>常用的聚合函数具体包括<code>count</code>、<code>sum</code>、<code>avg</code>、<code>max</code>、<code>min</code>、<code>wm_concat</code>、<code>listagg</code>。</p>
+<ol>
+<li><code>count</code>、<code>sum</code>、<code>avg</code>、<code>max</code>、<code>min</code>：计算数量、总和、最大值、最小值。</li>
+<li><code>wm_concat</code>和<code>listagg</code>：分组后连接字符串。<br> <code>wm_concat(字段)</code>默认分隔符为<code>,</code>，<code>list(字段，分隔符)</code>可以手动指定一个分隔符，需要在后面跟上<code>within group(order by ...)</code>进行分组后的排序。</li>
+</ol>
+<h2 id="分析函数"><a href="#分析函数" class="headerlink" title="分析函数"></a>分析函数</h2><p>分析函数可以显示聚合的结果，也可以显示明细的字段，也被称为窗口函数。分析函数与聚合函数不同在于，<strong>分析函数可以显示聚合的结果，并且为每一组返回多个数据行</strong>，而聚合函数只能显示聚合的结果和分组的字段。<br>使用<code>over</code>关键字可以声明分析函数。分析函数是在<code>FROM</code>、<code>WHERE</code>、<code>GROUP BY</code>和<code>HAVING</code>子句后进行计算的。<br>分析函数的语法为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 分析函数(参数) OVER (分析子句)</span></span><br><span class="line"><span class="keyword">SELECT</span> deptno, ename, sal, <span class="built_in">sum</span>(sal) <span class="keyword">OVER</span> (<span class="keyword">partition</span> <span class="keyword">by</span> deptno) <span class="keyword">AS</span> 部门工资总和 <span class="keyword">FROM</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E5%88%86%E6%9E%90%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%9C.png" alt="分析函数示例结果"></p>
+<p>分析函数可以在同一条SQL语句中指定不同的分组条件。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 别名忘记改了，将就看吧</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,sal,job,deptno,  </span><br><span class="line">       <span class="built_in">sum</span>(sal) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> deptno) <span class="keyword">AS</span> dept_avg_sal,  </span><br><span class="line">       <span class="built_in">sum</span>(sal) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> job)    <span class="keyword">AS</span> job_avg_sal  </span><br><span class="line"><span class="keyword">FROM</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E5%88%86%E6%9E%90%E5%87%BD%E6%95%B0%E5%9C%A8%E5%90%8C%E4%B8%80%E6%9D%A1%E8%AF%AD%E5%8F%A5%E6%8C%87%E5%AE%9A%E4%B8%8D%E5%90%8C%E7%9A%84%E6%8E%92%E5%BA%8F.png" alt="使用分析函数在同一条SQL语句中指定不同的分组条件"><br>分析函数一般用于：</p>
+<ul>
+<li>显示聚合的结果以及其他字段；</li>
+<li>在一条语句中使用多个分组条件；</li>
+<li>进行数据分析时；</li>
+<li>进行排列、移动行时。</li>
+</ul>
+<h3 id="分析子句"><a href="#分析子句" class="headerlink" title="分析子句"></a>分析子句</h3><p>分析子句分为三种：<code>order by</code>、<code>partition by</code>以及<code>rows/range between</code>。</p>
+<h4 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a><code>order by</code></h4><p>排序，表示累积的结果。<br>下面示例中，表示按照部门编号对总工资进行累加。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DEPTNO,SAL,<span class="built_in">sum</span>(SAL) <span class="keyword">over</span> (<span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="keyword">between</span> unbounded preceding <span class="keyword">and</span> <span class="keyword">current</span> <span class="type">row</span>) <span class="keyword">as</span> 总工资  </span><br><span class="line"><span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/order_by%E6%8E%92%E5%BA%8F%E7%BB%93%E6%9E%9C.png" alt="order by排序结果"></p>
+<h4 id="partition-by"><a href="#partition-by" class="headerlink" title="partition by"></a><code>partition by</code></h4><p>分组，表示分组的条件。<br>下面示例中，表示分别对每个部门的总工资进行累加，按照部门编号进行分组。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DEPTNO,SAL,<span class="built_in">sum</span>(SAL) <span class="keyword">over</span> (<span class="keyword">partition</span> <span class="keyword">by</span> DEPTNO <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="keyword">between</span> unbounded preceding <span class="keyword">and</span> <span class="keyword">current</span> <span class="type">row</span>) <span class="keyword">as</span> 部门总工资  </span><br><span class="line"><span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/partition_by%E5%88%86%E7%BB%84%E7%BB%93%E6%9E%9C.png" alt="partition by 分组结果"></p>
+<h4 id="rows-between"><a href="#rows-between" class="headerlink" title="rows between"></a><code>rows between</code></h4><p>如果我们使用常规的分析函数查看累加过程，会发现在遇到相同数值的值时，分析函数会将其同时相加。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename,sal, <span class="built_in">sum</span>(sal) <span class="keyword">OVER</span> ( <span class="keyword">ORDER</span> <span class="keyword">BY</span> sal) <span class="keyword">AS</span> 累加总和 <span class="keyword">FROM</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E5%88%86%E6%9E%90%E5%87%BD%E6%95%B0%E8%BF%9B%E8%A1%8C%E5%B8%B8%E8%A7%84%E7%B4%AF%E5%8A%A0.png" alt="分析函数进行常规累加"><br>此时，按行累计求和只需要在order by子句后加上一句：<code>rows between unbounded preceding and current row</code>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, sal,</span><br><span class="line"><span class="built_in">sum</span>(sal) <span class="keyword">OVER</span> ( <span class="keyword">ORDER</span> <span class="keyword">BY</span> sal <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> UNBOUNDED PRECEDING <span class="keyword">AND</span> <span class="keyword">CURRENT</span> <span class="type">ROW</span> ) <span class="keyword">AS</span> 累加总和  </span><br><span class="line"><span class="keyword">FROM</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E6%8C%89%E8%A1%8C%E7%B4%AF%E8%AE%A1%E6%B1%82%E5%92%8C.png" alt="按行累计求和"></p>
+<h4 id="对rows的参数研究（个人分析，无参考）"><a href="#对rows的参数研究（个人分析，无参考）" class="headerlink" title="对rows的参数研究（个人分析，无参考）"></a>对<code>rows</code>的参数研究（个人分析，无参考）</h4><p><code>rows between</code>是一个窗口分析子句，其取值是一个<strong>范围</strong>的形式。<br><code>rows between</code>的常见语法见下图：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/rows_between%E8%AF%AD%E6%B3%95.png" alt="rows_between语法"><br>首先，先来认识一下每个词代表什么意思：</p>
+<ul>
+<li>unbounded：不限制的，无限的</li>
+<li>preceding：前面的</li>
+<li>following：后面的</li>
+<li>current：当前的<br>然后以一个SQL语句作为示范：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DEPTNO,SAL,<span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO [<span class="keyword">rows</span> <span class="keyword">between</span>子句] ) <span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+现在，我们把下面每一条子句都代入到上面：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 从最开始的行到最后的行，等效于sum()，代入后每一行的数据都是累加后的总和</span></span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> unbounded preceding <span class="keyword">and</span> unbounded following</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 从最开始的行到当前行，代入后下一行的数据等于前面行的累加</span></span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> unbounded preceding <span class="keyword">and</span> <span class="keyword">current</span> now</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 从最开始的行到当前行的前/后第value行。</span></span><br><span class="line"><span class="comment">-- 例如，取 1 preceding</span></span><br><span class="line"><span class="comment">--  SAL    值</span></span><br><span class="line"><span class="comment">-- 2450   NULL</span></span><br><span class="line"><span class="comment">-- 5000   2450</span></span><br><span class="line"><span class="comment">-- 1300   2450+5000=7450</span></span><br><span class="line"><span class="comment">-- 2975   2450+5000+1300=8750</span></span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> unbounded preceding <span class="keyword">and</span> <span class="keyword">values</span> preceding<span class="operator">/</span>following</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 从当前行到最后的行，相当于将累加过程逆序开始，从结果到最开始</span></span><br><span class="line"><span class="comment">-- 等同于rows between unbounded preceding and current now的降序排列结果</span></span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">current</span> now <span class="keyword">and</span> unbounded following</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 从当前行到当前行，等效于select直接查询</span></span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">current</span> now <span class="keyword">and</span> <span class="keyword">current</span> now</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 从当前行到当前行的前/后第value行。</span></span><br><span class="line"><span class="comment">-- 例如：取 1 following</span></span><br><span class="line"><span class="comment">--  SAL    值</span></span><br><span class="line"><span class="comment">-- 2450   2450+5000=7450</span></span><br><span class="line"><span class="comment">-- 5000   5000+1300=6300</span></span><br><span class="line"><span class="comment">-- 1300   1300+2975=4275</span></span><br><span class="line"><span class="comment">-- 2975   1300+下一行=...</span></span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">current</span> now <span class="keyword">and</span> <span class="keyword">values</span> preceding<span class="operator">/</span>following</span><br></pre></td></tr></table></figure>
+下面是一些比较长的参数：<br>&#x3D;&gt; 从当前行前&#x2F;后第values行到最后的行。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">values</span> preceding<span class="operator">/</span>following <span class="keyword">and</span> unbound following</span><br><span class="line"><span class="comment">-- 举例：从当前行的后1行到最后的行</span></span><br><span class="line"><span class="keyword">select</span> DEPTNO,SAL,<span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="keyword">between</span> <span class="number">1</span> following <span class="keyword">and</span> unbound following ) <span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+观察后我们可以发现，第一行合并的值从第二行SAL开始累加，第二行合并的值从第三行SAL开始累加，一直到最后一行合并的值从第n+1行开始累加，由于最后一行的下一行为null，因此累加后得到的合并的值也为null。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E4%BB%8E%E5%BD%93%E5%89%8D%E8%A1%8C%E5%90%8E%E7%AC%AC1%E8%A1%8C%E5%88%B0%E6%9C%80%E5%90%8E%E7%9A%84%E8%A1%8C.png" alt="从当前行后第1行到最后的行"></li>
+</ul>
+<p>&#x3D;&gt;从当前行前&#x2F;后第value行到当前行。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">values</span> preceding<span class="operator">/</span>following <span class="keyword">and</span> <span class="keyword">current</span> now</span><br><span class="line"><span class="comment">-- 举例：从当前行的前1行到当前行。</span></span><br><span class="line"><span class="keyword">select</span> DEPTNO,SAL,<span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="keyword">between</span> <span class="number">1</span> preceding <span class="keyword">and</span> <span class="keyword">current</span> now ) <span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+<p>我们可以很轻松的发现，第n行的合并值为第n-1行的SAL和第n行的SAL累加。由于第一行的前一行没有值，因此第一行的合并值只能得到当前的值。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E4%BB%8E%E5%BD%93%E5%89%8D%E8%A1%8C%E7%9A%84%E5%89%8D1%E8%A1%8C%E5%88%B0%E5%BD%93%E5%89%8D%E8%A1%8C.png" alt="从当前行的前1行到当前行"></p>
+<p>&#x3D;&gt;从当前行前&#x2F;后第values行到当前行前&#x2F;后第values行。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">values</span> preceding<span class="operator">/</span>following <span class="keyword">values</span> preceding<span class="operator">/</span>following</span><br><span class="line"><span class="comment">-- 举例：从当前行的前1行到当前行的后1行</span></span><br><span class="line"><span class="keyword">select</span> DEPTNO,SAL,<span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="keyword">between</span> <span class="number">1</span> preceding <span class="keyword">and</span> <span class="number">1</span> following ) <span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+<p><strong>这是一个非常自由的参数！</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E4%BB%8E%E5%BD%93%E5%89%8D%E8%A1%8C%E7%9A%84%E5%89%8D1%E8%A1%8C%E5%88%B0%E5%BD%93%E5%89%8D%E8%A1%8C%E7%9A%84%E5%90%8E1%E8%A1%8C.png" alt="从当前行的前1行到当前行的后1行"></p>
+<p><em><strong>那如果，我们不需要<code>between</code>呢？</strong></em><br>当然可以，为什么不行！</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DEPTNO,  </span><br><span class="line">       SAL,  </span><br><span class="line">       <span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> unbounded preceding ) <span class="keyword">as</span> 合并<span class="number">1</span>,  </span><br><span class="line">       <span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="keyword">current</span> <span class="type">row</span> ) <span class="keyword">as</span> 合并<span class="number">2</span>,  </span><br><span class="line">       <span class="built_in">sum</span>(SAL) <span class="keyword">over</span> ( <span class="keyword">order</span> <span class="keyword">by</span> DEPTNO <span class="keyword">rows</span> <span class="number">1</span> preceding ) <span class="keyword">as</span> 合并<span class="number">3</span>  </span><br><span class="line"><span class="keyword">from</span> EMP;</span><br></pre></td></tr></table></figure>
+<p>从合并的结果我们可以看到，他们都等效于<code>rows between 上述参数 and current now</code>。由此我们可以得出结论，<code>rows</code>单独使用时默认和<code>rows ... between current now</code>具有相同的效果。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/rows%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%9C.png" alt="rows单独使用的结果"><br><em><strong>唯一需要注意的是，<code>rows</code>单独使用时只能跟<code>preceding</code>，不允许使用<code>following</code>。</strong></em></p>
+<h3 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h3><p>排列分为三种：<code>row_number()</code>、<code>rank()</code>和<code>dense_rank()</code>。<br>例如，当我们要查询emp表的工资排名：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, sal, <span class="built_in">row_number</span>() OVRE (<span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL <span class="keyword">DESC</span>) <span class="keyword">FROM</span> emp;</span><br><span class="line"><span class="keyword">SELECT</span> ename, sal, <span class="built_in">rank</span>() <span class="keyword">OVER</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL <span class="keyword">desc</span>) <span class="keyword">FROM</span> emp;</span><br><span class="line"><span class="keyword">SELECT</span> ename, sal, <span class="built_in">DENSE_RANK</span>() <span class="keyword">OVER</span> (<span class="keyword">BY</span> SAL <span class="keyword">desc</span>) <span class="keyword">FROM</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E6%8E%92%E5%88%97%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C.png" alt="排列查询结果"><br>由此我们可以得到：<code>row_number()</code>不并列，<code>rank()</code>并列并跳一级，<code>dense_rank()</code>并列不跳级。<code>row_number()</code>适用于计数，<code>rank()</code>适用于排名，<code>dense_rank()</code>适用于颁奖。</p>
+<h3 id="移动行"><a href="#移动行" class="headerlink" title="移动行"></a>移动行</h3><p>移动行分为两种，一般用于计算环比，必须排序。number代表要移动的行数，value代表移动后出现NULL时，替换掉NULL的值。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 上移</span></span><br><span class="line"><span class="built_in">lead</span>(字段, number, [<span class="keyword">value</span>]) <span class="keyword">over</span>() <span class="keyword">over</span>([<span class="keyword">partition</span> <span class="keyword">by</span>] <span class="keyword">order</span> <span class="keyword">by</span>)</span><br><span class="line"><span class="comment">-- 下移</span></span><br><span class="line"><span class="built_in">lag</span>(字段, number, [<span class="keyword">value</span>]) <span class="keyword">over</span>() <span class="keyword">over</span>([<span class="keyword">partition</span> <span class="keyword">by</span>] <span class="keyword">order</span> <span class="keyword">by</span>)</span><br></pre></td></tr></table></figure>
+<p>例如，将工资向上或向下移动：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sal,</span><br><span class="line">       <span class="built_in">lead</span>(sal, <span class="number">1</span>) <span class="keyword">OVER</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> sal) <span class="keyword">AS</span> next_sal,  </span><br><span class="line">       <span class="built_in">lag</span>(sal, <span class="number">1</span>) <span class="keyword">OVER</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> sal) <span class="keyword">AS</span> prev_sal  </span><br><span class="line"><span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E4%B8%8A%E7%A7%BB%E5%92%8C%E4%B8%8B%E7%A7%BB%E5%B7%A5%E8%B5%84.png" alt="上移和下移工资"></p>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p>对于集合，我们想要添加别名，需要添加在第一条SQL语句上，而且两条SQL语句的数据类型和数量必须相对应。</p>
+<ol>
+<li>并集<code>union</code> 和<code>union all</code><br> <code>union</code>会对结果去重，而<code>union all</code>不会。对于集合A和B：<ul>
+<li>A union B &#x3D; A + B - A intersect B</li>
+<li>A union all B &#x3D; A + B</li>
+</ul>
+</li>
+<li>交集<code>intersect</code><br>集合A和B共有的部分。</li>
+<li>差集<code>minus</code><br>集合A拥有而集合B没有的部分，相当于A minus B &#x3D; A union B - B。</li>
+</ol>
+<h2 id="行列转换"><a href="#行列转换" class="headerlink" title="行列转换"></a>行列转换</h2><ol>
+<li>行转列（透视）：一维表转为二维表<ul>
+<li>数据透视：将原始数据按照某一列进行分组，并将其他列的值进行合并，生成透视表。</li>
+<li>数据汇总：将多个行数据按照指定的列进行汇总，生成一条汇总数据。</li>
+<li>数据展示：将多条行数据进行合并，生成一行展示数据。<br> 行转列使用<code>pivot</code>函数将行数据转化为列数据。其中，<strong>被聚合的列将转化为列中的值，而列中的值将变为新增的列名。</strong> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name</span><br><span class="line">PIVOT (聚合函数(被聚合的列) <span class="keyword">FOR</span> 行转列的列 <span class="keyword">IN</span> (<span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;value2&#x27;</span>, ...));</span><br></pre></td></tr></table></figure>
+ 例如，我们需要将下面这张表转化为二维表：<br> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E8%A1%8C%E8%BD%AC%E5%88%97%E4%B8%80%E7%BB%B4%E8%A1%A8.png" alt="行转列一维表"><br> 我们可以使用以下SQL语句： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> KECHENG  </span><br><span class="line">PIVOT (  </span><br><span class="line">   <span class="built_in">max</span>(SCORE) <span class="keyword">FOR</span> COURSE <span class="keyword">IN</span>(<span class="string">&#x27;语文&#x27;</span> <span class="keyword">AS</span> 语文,<span class="string">&#x27;数学&#x27;</span> <span class="keyword">AS</span> 数学,<span class="string">&#x27;英语&#x27;</span> <span class="keyword">AS</span> 英语,<span class="string">&#x27;历史&#x27;</span> <span class="keyword">AS</span> 历史,<span class="string">&#x27;化学&#x27;</span> <span class="keyword">AS</span> 化学)  </span><br><span class="line">   )</span><br><span class="line">   <span class="keyword">ORDER</span> <span class="keyword">BY</span> ID;</span><br></pre></td></tr></table></figure>
+ 即可得到如下结果：<br> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/%E8%A1%8C%E8%BD%AC%E5%88%97%E7%BB%93%E6%9E%9C.png" alt="行转列结果"></li>
+</ul>
+</li>
+<li>列转行（逆透视）：二维表转为一维表<ul>
+<li>数据拆分：将一列数据按照某一列进行拆分，生成多行数据。</li>
+<li>数据转换：将多列数据合并为一列，方便后续处理或分析。</li>
+<li>数据规整：将多列数据进行规整，使得数据结构更加清晰和易于分析。</li>
+</ul>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>Oracle从入土到诈尸</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://shewngeung.github.io/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/">https://shewngeung.github.io/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>ShewnGeung</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2025-03-23</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2025-03-23</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93/">关系型数据库</a><a class="post-meta__tags" href="/tags/Oracle/">Oracle</a></div><div class="post_share"></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>喂猫猫吃饭~</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/java/Java%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%83%A7%E7%83%A4/" title="Java从入门到烧烤"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java从入门到烧烤</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Database/MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" title="MySQL的安装与使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-22</div><div class="title">MySQL的安装与使用</div></div></a></div><div><a href="/Database/MySQL%E4%BB%8E%E5%BB%BA%E8%A1%A8%E5%88%B0%E5%88%A0%E5%BA%93/" title="MySQL从建表到删库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-10</div><div class="title">MySQL从建表到删库</div></div></a></div><div><a href="/Database/%E4%BD%BF%E7%94%A8docker%E5%AE%89%E8%A3%85Oracle%2019c/" title="使用docker安装Oracle 19c"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-11</div><div class="title">使用docker安装Oracle 19c</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="card-info-avatar"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-status-box"><div class="author-status"><g-emoji class="g-emoji" alias="palm_tree" fallback-src="https://lskypro.acozycotage.net/LightPicture/2022/12/fe1dc0402e623096.jpg">🐟</g-emoji><span>认真摸鱼中</span></div></div></div><div class="author-info__name">ShewnGeung</div><div class="author-info__description">Programmer</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ShewnGeung"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">灰色的烟雾模糊了遥远的星座，眼前的一切失去了历史和名字，世界上只剩一些影影绰绰的温柔。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Oracle基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="toc-number">1.1.</span> <span class="toc-text">增删改查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LIKE"><span class="toc-number">1.2.</span> <span class="toc-text">LIKE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">基础函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">数值函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">字符函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">转换函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-number">2.4.</span> <span class="toc-text">日期函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">2.5.</span> <span class="toc-text">通用函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">高级函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">聚合函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">分析函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%AD%90%E5%8F%A5"><span class="toc-number">3.2.1.</span> <span class="toc-text">分析子句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#order-by"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">order by</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#partition-by"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">partition by</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rows-between"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">rows between</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9rows%E7%9A%84%E5%8F%82%E6%95%B0%E7%A0%94%E7%A9%B6%EF%BC%88%E4%B8%AA%E4%BA%BA%E5%88%86%E6%9E%90%EF%BC%8C%E6%97%A0%E5%8F%82%E8%80%83%EF%BC%89"><span class="toc-number">3.2.1.4.</span> <span class="toc-text">对rows的参数研究（个人分析，无参考）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%88%97"><span class="toc-number">3.2.2.</span> <span class="toc-text">排列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E8%A1%8C"><span class="toc-number">3.2.3.</span> <span class="toc-text">移动行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">3.3.</span> <span class="toc-text">集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%88%97%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.4.</span> <span class="toc-text">行列转换</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/" title="Oracle从入土到诈尸">Oracle从入土到诈尸</a><time datetime="2025-03-23T00:52:44.000Z" title="发表于 2025-03-23 08:52:44">2025-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/java/Java%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%83%A7%E7%83%A4/" title="Java从入门到烧烤">Java从入门到烧烤</a><time datetime="2025-01-23T05:36:27.000Z" title="发表于 2025-01-23 13:36:27">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/java/CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8B%E9%85%8D%E7%BD%AEjava%E7%8E%AF%E5%A2%83/" title="CentOS服务器下配置java环境">CentOS服务器下配置java环境</a><time datetime="2025-01-23T01:39:37.000Z" title="发表于 2025-01-23 09:39:37">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Database/MySQL%E4%BB%8E%E5%BB%BA%E8%A1%A8%E5%88%B0%E5%88%A0%E5%BA%93/" title="MySQL从建表到删库">MySQL从建表到删库</a><time datetime="2024-11-10T08:28:29.000Z" title="发表于 2024-11-10 16:28:29">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Database/MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" title="MySQL的安装与使用">MySQL的安装与使用</a><time datetime="2024-10-22T06:17:10.000Z" title="发表于 2024-10-22 14:17:10">2024-10-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright"><span><b>&copy;2023 - 2025</b></span><span><b>&nbsp;&nbsp;By ShewnGeung</b></span></div><div class="footer_custom_text">Silence or relief is absolute.<p><a target="_blank" href="https://hexo.io/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-black?style=flat&logo=Vercel" title="本站默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div><div id="workboard"></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script defer data-pjax src="/js/cat.js"></script><script defer src="/js/runtime.js"></script><script async src="/js/title.js"></script><script src="/js/f12.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="S&amp;G" data-fontsize="15px" data-random="false" async="async"></script><script src="//code.tidio.co/trblydd5ddrrs2py0rvywaogkgb1naoo.js" async="async"></script><script>(() => {
+  const isChatBtn = true
+  const isChatHideShow = true
+
+  if (isChatBtn) {
+    let isShow = false
+    const close = () => {
+      window.tidioChatApi.hide()
+      isShow = false
+    }
+    
+    const open = () => {
+      window.tidioChatApi.open()
+      window.tidioChatApi.show()
+      isShow = true
+    }
+
+    const onTidioChatApiReady = () => {
+      window.tidioChatApi.hide()
+      window.tidioChatApi.on("close", close)
+    }
+    if (window.tidioChatApi) {
+      window.tidioChatApi.on("ready", onTidioChatApiReady)
+    } else {
+      document.addEventListener("tidioChat-ready", onTidioChatApiReady)
+    }
+
+    window.chatBtnFn = () => {
+      if (!window.tidioChatApi) return
+      isShow ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        window.tidioChatApi && window.tidioChatApi.hide()
+      },
+      show: () => {
+        window.tidioChatApi && window.tidioChatApi.show()
+      }
+    }
+  }
+})()</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script></div></body><script>((function() {var callbacks = [],timeLimit = 50,open = false;setInterval(loop, 1);return {addListener: function(fn) {callbacks.push(fn);},cancleListenr: function(fn) {callbacks = callbacks.filter(function(v) {return v !== fn;});}}
+function loop() {var startTime = new Date();debugger;if (new Date() - startTime > timeLimit) {if (!open) {callbacks.forEach(function(fn) {fn.call(null);});}open = true;window.stop();alert('你真坏，请关闭控制台！');document.body.innerHTML = "";} else {open = false;}}})()).addListener(function() {window.location.reload();});</script><script>function toDevtools(){
+  let num = 0; 
+  let devtools = new Date();
+  devtools.toString = function() {
+    num++;
+    if (num > 1) {
+        alert('你真坏，请关闭控制台！')
+        window.location.href = "about:blank"
+        blast();
+    }
+  }
+  console.log('', devtools);
+}
+toDevtools();</script></html>
