@@ -1,0 +1,423 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MySQL的MVCC机制 | ShewnGeung</title><meta name="author" content="ShewnGeung"><meta name="copyright" content="ShewnGeung"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="什么是MVCCMVCC全称Multi-Version Concurrency Control，即多版本并发控制。MVCC是一种无锁并发控制机制，通过保存数据的多个版本来实现读写操作的并行执行，从而提高数据库性能。 MVCC机制具有以下优点：  提高并发性能：读操作不会阻塞写操作，写操作也不会阻塞读操作，有效地提高数据库的并发性能。 降低死锁风险：由于无需使用显式锁来进行并发控制，MVCC可以降低死">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的MVCC机制">
+<meta property="og:url" content="https://shewngeung.github.io/Database/MySQL%E7%9A%84MVCC%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="ShewnGeung">
+<meta property="og:description" content="什么是MVCCMVCC全称Multi-Version Concurrency Control，即多版本并发控制。MVCC是一种无锁并发控制机制，通过保存数据的多个版本来实现读写操作的并行执行，从而提高数据库性能。 MVCC机制具有以下优点：  提高并发性能：读操作不会阻塞写操作，写操作也不会阻塞读操作，有效地提高数据库的并发性能。 降低死锁风险：由于无需使用显式锁来进行并发控制，MVCC可以降低死">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://shewngeung.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2023-08-03T05:49:55.000Z">
+<meta property="article:modified_time" content="2023-08-03T05:49:55.000Z">
+<meta property="article:author" content="ShewnGeung">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shewngeung.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://shewngeung.github.io/Database/MySQL%E7%9A%84MVCC%E6%9C%BA%E5%88%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL的MVCC机制',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-03 13:49:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/cat.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><div id="myscoll"></div><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/pictures/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="ShewnGeung"><span class="site-name">ShewnGeung</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/pictures/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL的MVCC机制</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-03T05:49:55.000Z" title="发表于 2023-08-03 13:49:55">2023-08-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-03T05:49:55.000Z" title="更新于 2023-08-03 13:49:55">2023-08-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="什么是MVCC"><a href="#什么是MVCC" class="headerlink" title="什么是MVCC"></a>什么是MVCC</h1><p>MVCC全称Multi-Version Concurrency Control，即多版本并发控制。MVCC是一种<strong>无锁并发控制机制</strong>，通过保存数据的多个版本来实现读写操作的并行执行，从而提高数据库性能。</p>
+<p>MVCC机制具有以下优点：</p>
+<ul>
+<li><strong>提高并发性能</strong>：读操作不会阻塞写操作，写操作也不会阻塞读操作，有效地提高数据库的并发性能。</li>
+<li><strong>降低死锁风险</strong>：由于无需使用显式锁来进行并发控制，MVCC可以降低死锁的风险。</li>
+</ul>
+<h1 id="当前读和快照读"><a href="#当前读和快照读" class="headerlink" title="当前读和快照读"></a>当前读和快照读</h1><h2 id="当前读"><a href="#当前读" class="headerlink" title="当前读"></a>当前读</h2><p>当前读可以直接读取最新的数据版本，读取时还要保证其他并发事务不能修改当前记录，会对读取的记录进行加锁。</p>
+<p>当前读是一种加锁操作，是悲观锁的实现。</p>
+<h3 id="一致性读"><a href="#一致性读" class="headerlink" title="一致性读"></a>一致性读</h3><p>默认隔离级别下，MySQL使用<strong>一致性读(Consistent Read)</strong> 来实现当前读。</p>
+<p>在事务开始时，MySQL会创建一个**一致性视图(Consistent View)**，该视图反映了事务开始时刻数据库的快照。在事务执行期间，无论其他事务对数据进行了何种修改，事务始终使用一致性视图来读取数据。这样可以保证在同一个事务内多次查询返回的结果是一致的，从而实现了当前读。</p>
+<h3 id="锁定读"><a href="#锁定读" class="headerlink" title="锁定读"></a>锁定读</h3><p><strong>锁定读(Locking Read)</strong> 是一种特殊情况下的当前读方式，在某些场景下使用。</p>
+<p>当使用锁定读时，MySQL会在执行读取操作前获取共享锁或排他锁，以确保数据的一致性。共享锁允许多个事务同时读取同一数据，而排他锁则阻止其他事务读取或写入该数据。</p>
+<p>锁定读适用于需要严格控制并发访问的场景，但由于加锁带来的性能开销较大，建议仅在必要时使用。</p>
+<h2 id="快照读"><a href="#快照读" class="headerlink" title="快照读"></a>快照读</h2><p>快照读是在读取数据时读取一个一致性视图中的数据，MySQL使用 MVCC 机制来支持快照读。</p>
+<p>具体而言，每个事务在开始时会创建一个一致性视图，该视图反映了事务开始时刻数据库的快照。这个一致性视图会记录当前事务开始时已经提交的数据版本。</p>
+<p>当执行查询操作时，MySQL会根据事务的一致性视图来决定可见的数据版本。只有那些在事务开始之前已经提交的数据版本才是可见的，未提交的数据或在事务开始后修改的数据则对当前事务不可见。</p>
+<p>像不加锁的 select 操作就是快照读，即不加锁的非阻塞读。</p>
+<p>快照读可能读到的并不一定是数据的最新版本，而有可能是之前的历史版本。</p>
+<p><strong>注意：快照读的前提是隔离级别不是串行级别，在串行级别下，事务之间完全串行执行，快照读会退化为当前读</strong></p>
+<p>MVCC主要就是为了<strong>实现读-写冲突不加锁</strong>，而这个读指的就是快照读，是乐观锁的实现。</p>
+<h1 id="MVCC原理解析"><a href="#MVCC原理解析" class="headerlink" title="MVCC原理解析"></a>MVCC原理解析</h1><h2 id="隐式字段"><a href="#隐式字段" class="headerlink" title="隐式字段"></a>隐式字段</h2><p>MySQL的行数据包含了一些隐式字段供内部使用，一般不会显示给用户：</p>
+<ul>
+<li><code>DB_ROW_ID</code>：<strong>隐含的自增ID（隐藏主键）</strong>，用于唯一标识表中的每一行数据，如果数据表没有主键，InnoDB会自动以DB_ROW_ID产生一个聚簇索引。</li>
+<li><code>DB_TRX_ID</code>：<strong>当前行数据所属的事务ID</strong>。每个事务在数据库中都有一个唯一的事务ID。通过 DB_TRX_ID 字段，可以追踪行数据和事务的所属关系。</li>
+<li><code>DB_ROLL_PTR</code>：该字段存储了<strong>回滚指针（Roll Pointer）</strong>，它指向用于回滚事务的Undo日志记录。</li>
+</ul>
+<h2 id="Undo-Log"><a href="#Undo-Log" class="headerlink" title="Undo Log"></a>Undo Log</h2><p>Undo日志（Undo Log）是MySQL中的一种重要的事务日志，是MVCC得以实现的核心所在。Undo日志的作用主要有两个方面：</p>
+<ul>
+<li><strong>事务回滚</strong>：当事务需要回滚时，MySQL可以通过Undo日志中的旧值将数据还原到事务开始之前的状态，保证了事务回滚的一致性。</li>
+<li><strong>MVCC实现</strong>：MVCC 是InnoDB存储引擎的核心特性之一。通过使用Undo日志，MySQL可以为每个事务提供独立的事务视图，使得事务读取数据时能看到一致且符合隔离级别要求的数据版本。</li>
+</ul>
+<p>在InnoDB存储引擎中，Undo日志分为<strong>插入Undo日志</strong>和<strong>更新Undo日志</strong>：</p>
+<ul>
+<li>Insert Undo Log：在插入操作中生成的Undo日志。由于插入操作的记录只对当前事务可见，对其他事务不可见，因此在事务提交后可以直接删除，无需进行purge操作。</li>
+<li>Update Undo Log：在更新或删除操作中生成的Undo日志。更新Undo日志可能需要提供MVCC机制，因此不能在事务提交时就立即删除。相反，它们会在提交时放入Undo日志链表中，并等待purge线程进行最终的删除。删除操作只是设置一下老记录的 DELETED_BIT，并不真正将过时的记录删除，为了节省磁盘空间，InnoDB有专门的purge线程来清理 DELETED_BIT 为true的记录。<br><em>查询操作不会修改任何记录，因此不需要记录相应的Undo Log。</em></li>
+</ul>
+<p><strong>不同事务或者相同事务对同一记录行的修改，会使该记录行的 undo log 成为一条链表，链首就是最新的记录，链尾就是最早的旧记录。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 事务A</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> user_info(id, name) <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;soria&#x27;</span>);</span><br><span class="line"><span class="comment">-- 事务B</span></span><br><span class="line"><span class="keyword">update</span> user_info <span class="keyword">set</span> name<span class="operator">=</span><span class="string">&#x27;SG&#x27;</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 事务C</span></span><br><span class="line"><span class="keyword">update</span> user_info <span class="keyword">set</span> name<span class="operator">=</span><span class="string">&#x27;Soria&#x27;</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在事务A执行后，事务B对该记录进行了修改。</p>
+<p>在事务B修改时，数据库会先对该行添加一个排他锁，然后将该行数据复制到Undo Log中，作为旧记录。然后再修改该行，并修改隐藏字段<code>DB_TRX_ID</code>为事务B的ID，然后将回滚指针指向Undo Log的旧记录，即上个版本。事务提交完成后，释放锁。</p>
+<p>在事务C修改时，操作同上。复制时发现该行已经有Undo Log了，那么会将最新的旧记录（即当前的记录）插入到已有的Undo Log前面，类似于链表的头插法。</p>
+<p>关于<code>DB_ROLL_PTR</code>与Undo Log的配合工作，具体流程如下：</p>
+<ol>
+<li>在更新或删除操作之前，MySQL会将旧值写入Undo Log中。</li>
+<li>当事务需要回滚时，MySQL会根据事务的Undo日志记录，通过<code>DB_ROLL_PTR</code>找到对应的Undo Log。</li>
+<li>根据Undo Log中记录的旧值，MySQL将旧值恢复到相应的数据行中，实现数据的回滚操作。</li>
+</ol>
+<p>通过<code>DB_ROLL_PTR</code>和Undo Log的配合工作，MySQL能够有效地管理事务的一致性和隔离性。Undo Log的使用也使得MySQL能够支持MVCC，从而提供了高并发环境下的读取一致性和事务隔离性。</p>
+<h2 id="版本链"><a href="#版本链" class="headerlink" title="版本链"></a>版本链</h2><p>每次更新操作所记录的Undo Log会连接成一个链表，称之为版本链。版本链的头节点代表当前记录的最新值。此外，每个版本还包含生成该版本的事务ID。</p>
+<h2 id="Read-View"><a href="#Read-View" class="headerlink" title="Read View"></a>Read View</h2><p>即一致性视图，是用来判断版本链中的哪个版本对当前事务是可见的。</p>
+<p>每个事务开启时，都会被分配一个ID，这个D是递增的。事务执行<strong>快照读</strong>时，会生成数据库系统当前的一个快照，记录并维护系统当前活跃事务的ID。即事务进行快照读时生成的读视图（Read View）。</p>
+<p><strong>Read View只针对RC和RR级别</strong>。</p>
+<ul>
+<li>RU： 在RU隔离级别下会发生脏读。这意味着不需要通过 Read View 来限制访问范围，事务可以自由地读取其他事务的未提交数据。由于没有对可见性进行严格控制，因此不需要创建或使用 Read View。</li>
+<li>S：在S隔离级别下，事务具有最高的隔离性，确保每次读取都能看到一致的快照。为了实现这种隔离级别，MySQL使用锁机制来保证事务之间的<strong>串行执行</strong>。由于事务按顺序执行，并且<strong>不允许并发操作</strong>，所以不需要使用 Read View 进行可见性判断。</li>
+</ul>
+<h2 id="Read-View可见性原则"><a href="#Read-View可见性原则" class="headerlink" title="Read View可见性原则"></a>Read View可见性原则</h2><p>Read View 遵循一个可见性原则，将要被修改的数据的<code>DB_TRX_ID</code>取出来，与系统当前其他活跃事务的ID去对比。</p>
+<p>如果<code>DB_TRX_ID</code>跟Read View的属性做了某些比较，不符合可见性，那就通过<code>DB_ROLL_PTR</code>回滚指针去取出Undo Log中的<code>DB_TRX_ID</code>再比较。即遍历链表的<code>DB_TRX_ID</code>，直到找到满足特定条件的<code>DB_TRX_ID</code>，那么这个<code>DB_TRX_ID</code>所在的记录就是当前事务能看见的最新老版本。</p>
+<p>Read View会维护以下字段：</p>
+<ul>
+<li><code>m_ids</code>：Read View创建时<strong>其他未提交的活跃事务ID列表</strong>。创建Read View时，将当前未提交事务ID记录下来，后续即使它们修改了记录行的值，对于当前事务也是不可见的。<code>m_ids</code>不包括当前事务自己和已提交的事务（正在内存中）。</li>
+<li><code>m_creator_trx_id</code>：创建该Read View的事务ID。</li>
+<li><code>m_low_limit_id</code>：目前出现过的最大的事务 ID+1，即<strong>下一个将被分配的事务 ID。大于等于这个 ID 的数据版本均不可见。</strong></li>
+<li><code>m_up_limit_id</code>：活跃事务列表<code>m_ids</code>中最小的事务ID，如果<code>m_ids</code>为空，则 <code>m_low_limit_id = m_up_limit_id</code>。<strong>小于这个 ID 的数据版本均可见</strong>。</li>
+</ul>
+<p>Read View的可见性判断如下：</p>
+<ol>
+<li>如果被访问版本的<code>DB_TRX_ID</code>属性值与Read View中的<code>m_creator_trx_id</code>值相同，表示当前事务正在访问自己所修改的记录，因此该版本<strong>能</strong>被当前事务访问。  </li>
+<li>如果被访问版本的<code>DB_TRX_ID</code>属性值小于 Read View 中的<code>m_up_limit_id</code>值，说明生成该版本的事务在当前事务生成Read View之前已经提交，因此该版本<strong>能</strong>被当前事务访问。  </li>
+<li>如果被访问版本的<code>DB_TRX_ID</code>属性值大于或等于Read View中的<code>m_low_limit_id</code>值，说明生成该版本的事务在当前事务生成Read View之后才提交，因此该版本<strong>不能</strong>被当前事务访问。  </li>
+<li>如果被访问版本的<code>DB_TRX_ID</code>属性值位于Read View的<code>m_up_limit_id</code>和<code>m_low_limit_id</code>之间（包括边界），则需要进一步检查<code>DB_TRX_ID</code>是否在<code>m_ids</code>列表中。如果在列表中，说明在创建ReadView时生成该版本的事务仍处于活跃状态，因此该版本不能被访问；如果不在列表中，说明在创建Read View时生成该版本的事务已经提交，因此该版本可以被访问。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/Database/MySQL%E7%9A%84MVCC%E6%9C%BA%E5%88%B6/%E4%BA%8B%E5%8A%A1%E5%8F%AF%E8%A7%81%E6%80%A7%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="事务可见性示意图"></p>
+<h2 id="RC-和-RR-下的-Read-View"><a href="#RC-和-RR-下的-Read-View" class="headerlink" title="RC 和 RR 下的 Read View"></a><strong>RC 和 RR 下的 Read View</strong></h2><p>RC 和 RR 下生成Read View的时机是有所差异的：</p>
+<ul>
+<li>RC：每次SELECT数据前都生成一个ReadView。</li>
+<li>RR：只在第一次读取数据时生成一个Read View，后面会复用第一次生成的。</li>
+</ul>
+<p>正因为RC 和 RR生成 Read View 的时机不同，导致两个级别下看到的数据会不一致。</p>
+<p>现有如下三个事务以及执行顺序：<br>原始数据为：<code>id=1, name=&#39;soria&#39;</code></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="left">事务A</th>
+<th align="left">事务B</th>
+<th align="left">事务C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">t1</td>
+<td align="left">begin</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">t2</td>
+<td align="left"></td>
+<td align="left">begin</td>
+<td align="left">begin</td>
+</tr>
+<tr>
+<td align="center">t3</td>
+<td align="left">update user_info set name&#x3D;’SG’ where id&#x3D;1</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">t4</td>
+<td align="left">update user_info set name&#x3D;’sg’ where id&#x3D;1</td>
+<td align="left"></td>
+<td align="left">select * from user_info where id&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">t5</td>
+<td align="left">commit</td>
+<td align="left">update user_info set name&#x3D;’SORIA’ where id&#x3D;1</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">t6</td>
+<td align="left"></td>
+<td align="left">update user_info set name&#x3D;’soRIA’ where id&#x3D;1</td>
+<td align="left">select * from user_info where id&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">t7</td>
+<td align="left"></td>
+<td align="left">commit</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">t8</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">select * from user_info where id&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">t9</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">commit</td>
+</tr>
+<tr>
+<td align="center">在RC级别下，每次SELECT都会生成一个Read View，因此事务C查询到的结果依次为<code>soria</code>、<code>sg</code>、<code>soRIA</code>。由于RR级别会复用第一次生成的Read View，因此三次查询到的结果都为<code>soria</code>。</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><strong>RR级别只能防止部分幻读。</strong> MVCC解决的只是RR级别下<strong>快照读</strong>的幻读问题，而当前读的幻读问题则是通过临键锁来解决的。也就是说RR级别下是通过MVCC+临键锁来解决大部分幻读问题的。</p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>MySQL的MVCC机制</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://shewngeung.github.io/Database/MySQL%E7%9A%84MVCC%E6%9C%BA%E5%88%B6/">https://shewngeung.github.io/Database/MySQL%E7%9A%84MVCC%E6%9C%BA%E5%88%B6/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>ShewnGeung</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2023-08-03</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2023-08-03</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Mysql/">Mysql</a></div><div class="post_share"></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>喂猫猫吃饭~</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Markdown/%E6%99%AE%E9%80%9A%E7%9A%84Markdown%E8%AF%AD%E6%B3%95%E6%95%99%E7%A8%8B/" title="普通的Markdown语法教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">普通的Markdown语法教程</div></div></a></div><div class="next-post pull-right"><a href="/git/Git%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" title="Git的安装与使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Git的安装与使用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Database/MySQL%E4%BB%8E%E5%BB%BA%E8%A1%A8%E5%88%B0%E5%88%A0%E5%BA%93/" title="MySQL从建表到删库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-10</div><div class="title">MySQL从建表到删库</div></div></a></div><div><a href="/Database/MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" title="MySQL的安装与使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-22</div><div class="title">MySQL的安装与使用</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="card-info-avatar"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-status-box"><div class="author-status"><g-emoji class="g-emoji" alias="palm_tree" fallback-src="https://lskypro.acozycotage.net/LightPicture/2022/12/fe1dc0402e623096.jpg">🐟</g-emoji><span>认真摸鱼中</span></div></div></div><div class="author-info__name">ShewnGeung</div><div class="author-info__description">Programmer</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ShewnGeung"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">灰色的烟雾模糊了遥远的星座，眼前的一切失去了历史和名字，世界上只剩一些影影绰绰的温柔。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMVCC"><span class="toc-number">1.</span> <span class="toc-text">什么是MVCC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E8%AF%BB%E5%92%8C%E5%BF%AB%E7%85%A7%E8%AF%BB"><span class="toc-number">2.</span> <span class="toc-text">当前读和快照读</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E8%AF%BB"><span class="toc-number">2.1.</span> <span class="toc-text">当前读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E8%AF%BB"><span class="toc-number">2.1.1.</span> <span class="toc-text">一致性读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%AE%9A%E8%AF%BB"><span class="toc-number">2.1.2.</span> <span class="toc-text">锁定读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7%E8%AF%BB"><span class="toc-number">2.2.</span> <span class="toc-text">快照读</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MVCC%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">MVCC原理解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%AD%97%E6%AE%B5"><span class="toc-number">3.1.</span> <span class="toc-text">隐式字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Undo-Log"><span class="toc-number">3.2.</span> <span class="toc-text">Undo Log</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E9%93%BE"><span class="toc-number">3.3.</span> <span class="toc-text">版本链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Read-View"><span class="toc-number">3.4.</span> <span class="toc-text">Read View</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Read-View%E5%8F%AF%E8%A7%81%E6%80%A7%E5%8E%9F%E5%88%99"><span class="toc-number">3.5.</span> <span class="toc-text">Read View可见性原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RC-%E5%92%8C-RR-%E4%B8%8B%E7%9A%84-Read-View"><span class="toc-number">3.6.</span> <span class="toc-text">RC 和 RR 下的 Read View</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Soria%E7%9A%84%E7%99%BB%E7%A5%9E%E9%95%BF%E9%98%B6/slf4j%E6%95%B4%E5%90%88tinylog/" title="slf4j整合tinylog">slf4j整合tinylog</a><time datetime="2025-06-25T10:48:56.000Z" title="发表于 2025-06-25 18:48:56">2025-06-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%88%91%E5%9C%A8Java%E5%AD%A6%E6%96%A9%E7%A5%9E/%E6%88%91%E5%9C%A8Java%E5%AD%A6%E6%96%A9%E7%A5%9E%E4%B9%8BJUC%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="我在Java学斩神：JUC并发编程">我在Java学斩神：JUC并发编程</a><time datetime="2025-04-23T07:14:17.000Z" title="发表于 2025-04-23 15:14:17">2025-04-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%88%91%E5%9C%A8Java%E5%AD%A6%E6%96%A9%E7%A5%9E/%E6%88%91%E5%9C%A8Java%E5%AD%A6%E6%96%A9%E7%A5%9E%E4%B9%8B%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="我在Java学斩神：排序算法">我在Java学斩神：排序算法</a><time datetime="2025-04-21T12:05:44.000Z" title="发表于 2025-04-21 20:05:44">2025-04-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E6%88%91%E5%9C%A8Java%E5%AD%A6%E6%96%A9%E7%A5%9E/%E6%88%91%E5%9C%A8Java%E5%AD%A6%E6%96%A9%E7%A5%9E%E4%B9%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="我在Java学斩神：设计模式">我在Java学斩神：设计模式</a><time datetime="2025-04-21T08:55:48.000Z" title="发表于 2025-04-21 16:55:48">2025-04-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Database/Oracle%E4%BB%8E%E5%85%A5%E5%9C%9F%E5%88%B0%E8%AF%88%E5%B0%B8/" title="Oracle从入土到诈尸">Oracle从入土到诈尸</a><time datetime="2025-03-23T00:52:44.000Z" title="发表于 2025-03-23 08:52:44">2025-03-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright"><span><b>&copy;2023 - 2025</b></span><span><b>&nbsp;&nbsp;By ShewnGeung</b></span></div><div class="footer_custom_text">Silence or relief is absolute.<p><a target="_blank" href="https://hexo.io/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-black?style=flat&logo=Vercel" title="本站默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div><div id="workboard"></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script defer data-pjax src="/js/cat.js"></script><script defer src="/js/runtime.js"></script><script async src="/js/title.js"></script><script src="/js/f12.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="S&amp;G" data-fontsize="15px" data-random="false" async="async"></script><script src="//code.tidio.co/trblydd5ddrrs2py0rvywaogkgb1naoo.js" async="async"></script><script>(() => {
+  const isChatBtn = true
+  const isChatHideShow = true
+
+  if (isChatBtn) {
+    let isShow = false
+    const close = () => {
+      window.tidioChatApi.hide()
+      isShow = false
+    }
+    
+    const open = () => {
+      window.tidioChatApi.open()
+      window.tidioChatApi.show()
+      isShow = true
+    }
+
+    const onTidioChatApiReady = () => {
+      window.tidioChatApi.hide()
+      window.tidioChatApi.on("close", close)
+    }
+    if (window.tidioChatApi) {
+      window.tidioChatApi.on("ready", onTidioChatApiReady)
+    } else {
+      document.addEventListener("tidioChat-ready", onTidioChatApiReady)
+    }
+
+    window.chatBtnFn = () => {
+      if (!window.tidioChatApi) return
+      isShow ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        window.tidioChatApi && window.tidioChatApi.hide()
+      },
+      show: () => {
+        window.tidioChatApi && window.tidioChatApi.show()
+      }
+    }
+  }
+})()</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script></div></body><script>((function() {var callbacks = [],timeLimit = 50,open = false;setInterval(loop, 1);return {addListener: function(fn) {callbacks.push(fn);},cancleListenr: function(fn) {callbacks = callbacks.filter(function(v) {return v !== fn;});}}
+function loop() {var startTime = new Date();debugger;if (new Date() - startTime > timeLimit) {if (!open) {callbacks.forEach(function(fn) {fn.call(null);});}open = true;window.stop();alert('你真坏，请关闭控制台！');document.body.innerHTML = "";} else {open = false;}}})()).addListener(function() {window.location.reload();});</script><script>function toDevtools(){
+  let num = 0; 
+  let devtools = new Date();
+  devtools.toString = function() {
+    num++;
+    if (num > 1) {
+        alert('你真坏，请关闭控制台！')
+        window.location.href = "about:blank"
+        blast();
+    }
+  }
+  console.log('', devtools);
+}
+toDevtools();</script></html>
