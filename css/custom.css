@@ -1,8 +1,8 @@
 @font-face {
   /* 为载入的字体取名字(随意) */
-  font-family: 'JiaShu';	
+  font-family: "Noto Sans SC";
   /* 字体文件地址(相对或者绝对路径都可以) */
-  src: url(/font/LXGWWenKaiGBLite-Regular.ttf);
+  src: url(/font/NotoSansSC-Regular.woff2);
   /* 定义加粗样式(加粗多少) */
   font-weight: bolder;
   /* 定义字体样式(斜体/非斜体) */
@@ -13,9 +13,9 @@
 
 @font-face {
   /* 为载入的字体取名字(随意) */
-  font-family: 'JbMono';	
+  font-family: "Noto Sans Mono";
   /* 字体文件地址(相对或者绝对路径都可以) */
-  src: url(/font/JetbrainsMono.ttf);
+  src: url(/font/NotoSansMono-Regular.woff2);
   /* 定义加粗样式(加粗多少) */
   font-weight: normal;
   /* 定义字体样式(斜体/非斜体) */
@@ -26,30 +26,29 @@
 
 /* 页脚与头图透明 */
 #footer {
-    background: transparent !important;
-  }
-  #page-header {
-    background: transparent !important;
-  }
-  
-  /* 白天模式遮罩透明 */
-  #footer::before {
-    background: transparent !important;
-  }
-  #page-header::before {
-    background: transparent !important;
-  }
-  
-  /* 夜间模式遮罩透明 */
-  [data-theme="dark"] #footer::before {
-    background: transparent !important;
-  }
-  [data-theme="dark"] #page-header::before {
-    background: transparent !important;
-  }
+  background: transparent !important;
+}
+#page-header {
+  background: transparent !important;
+}
 
-  
-  /* 一级菜单居中 */
+/* 白天模式遮罩透明 */
+#footer::before {
+  background: transparent !important;
+}
+#page-header::before {
+  background: transparent !important;
+}
+
+/* 夜间模式遮罩透明 */
+[data-theme="dark"] #footer::before {
+  background: transparent !important;
+}
+[data-theme="dark"] #page-header::before {
+  background: transparent !important;
+}
+
+/* 一级菜单居中 */
 #nav .menus_items {
   position: absolute !important;
   width: fit-content !important;
@@ -65,7 +64,6 @@
 .menus_items .menus_item:nth-child(2) .menus_item_child {
   left: -125px;
 }
-
 
 /* 文章页H1-H6图标样式效果 */
 /* 控制风车转动速度 4s那里可以自己调节快慢 */
@@ -167,7 +165,7 @@ h6::before {
 #recent-posts > .recent-post-item {
   background: var(--trans-light);
   backdrop-filter: var(--backdrop-filter);
-  border-radius: 25px;
+  border-radius: 20px;
   border: var(--border-style);
 }
 
@@ -175,7 +173,7 @@ h6::before {
 #aside-content .card-widget {
   background: var(--trans-light);
   backdrop-filter: var(--backdrop-filter);
-  border-radius: 18px;
+  border-radius: 15px;
   border: var(--border-style);
 }
 
@@ -207,7 +205,6 @@ div#archive {
 [data-theme="dark"] div#page {
   background: var(--trans-dark);
 }
-
 
 /* 夜间模式页脚页头遮罩透明 */
 [data-theme="dark"] #footer::before {
@@ -269,8 +266,6 @@ div#archive {
   background-color: #222222f2;
   border: 1px solid #5c6060;
 }
-
-
 
 .card-info-avatar .author-status-box .author-status {
   display: flex;
